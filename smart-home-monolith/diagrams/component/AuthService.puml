@@ -1,0 +1,24 @@
+@startuml
+title AuthService Component Diagram
+
+top to bottom direction
+
+!includeurl ../templates/C4_Component.puml
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(AuthService, "AuthService", "Java, Spring", "Authenticate and authorize users")
+  ContainerDb(Database, "Database", "PostgreSQL", "Stores user data")
+}
+
+Container(AuthService, "AuthService", "Java, Spring", "Authenticate and authorize users") {
+  Component(UserController, "UserController", "Authenticate and authorize users")
+  Component(AdminController, "AdminController", "Authenticate and authorize admin")
+  Component(ServiceLayer, "ServiceLayer", "Business Logic")
+  Component(RepositoryLayer, "RepositoryLayer", "Data access logic")
+}
+
+Rel(UserController,ServiceLayer,"Calls business logic")
+Rel(AdminController,ServiceLayer,"Calls business logic")
+Rel(ServiceLayer,RepositoryLayer,"Reads/Writes data")
+Rel(RepositoryLayer,Database,"Reads/Writes user data")
+@enduml

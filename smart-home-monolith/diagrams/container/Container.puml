@@ -1,0 +1,61 @@
+@startuml
+title WarmHouse Container Diagram
+
+top to bottom direction
+
+!includeurl ../templates/C4_Component.puml
+
+Person(user, "User", "A user of the WarmHouse system")
+Person(admin, "Administrator", "An administrator managing the system")
+System(WarmHouseSystem, "WarmHouse System", "System managing and monitoring devices")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(WebApp, "Web Application", "React", "All functions")
+  Container(MobileApp, "Mobile Application", "Kotlin, Swift", "Monitoring state and send commands")
+  Container(ApiGateWay, "API GateWay", "Kusk", "Route requests")
+  Container(AuthService, "Authentication and authorization Service", "Java, Spring", "Authenticate and authorize users")
+  Container(UserProfileService, "User profile Service", "Java, Spring", "Registration and managing profile")
+  Container(DeviceService, "Device Service", "Java, Spring", "Add, configure, control and show state of devices")
+  Container(MonitoringService, "Monitoring Service", "Java, Spring", "Process all signals from devices through hub")
+  Container(PaymentService, "Payment Service", "Java, Spring", "Processes payments")
+  ContainerDb(PostgreSQL, "PostgreSQL", "PostgreSQL", "Stores user data")
+  ContainerDb(MongoDb, "MongoDb", "MongoDb", "Stores devices data")
+  ContainerQueue(Kafka, "Kafka", "Kafka", "Events from devices")
+}
+
+System_Ext(devices, "Smart Home Devices", "Monitored and controlled devices")
+System_Ext(hubs, "Smart Home Hubs", "Hub to interact with devices in home")
+System_Ext(bank, "Bank System", "External bank for processing payments")
+System_Ext(email, "Email System", "External system for sending e-mails")
+System_Ext(push_and_sms, "Notification System", "External system for sending push or SMS")
+
+Rel(user, WebApp, "Uses the system from start")
+Rel(user, MobileApp, "Monitoring and control devices")
+Rel(admin, WebApp, "Manages the system")
+Rel(WebApp, ApiGateWay, "Requests")
+Rel(MobileApp, ApiGateWay, "Requests")
+
+Rel(ApiGateWay, AuthService, "Authenticate and authorize")
+Rel(ApiGateWay, UserProfileService, "Manage user profile")
+Rel(ApiGateWay, DeviceService, "Manage devices and get current state")
+Rel(ApiGateWay, PaymentService, "Process payment requests")
+Rel(hubs, ApiGateWay, "Events and current state")
+Rel(ApiGateWay, MonitoringService, "Events and current state")
+
+Rel(PaymentService, bank, "Processes payments")
+Rel(PaymentService, email, "Notify users about payments")
+Rel(PaymentService, PostgreSQL, "Save payments info")
+
+Rel(MonitoringService, Kafka, "Produce Events")
+
+Rel(DeviceService, MongoDb, "Reads/Writes devices data")
+Rel(Kafka, DeviceService, "Read Events")
+Rel(DeviceService, push_and_sms, "Notify users about devices events")
+Rel(DeviceService, hubs, "Send commands")
+
+Rel(hubs, devices, "Commands")
+Rel_U(devices, hubs, "Events")
+
+Rel(AuthService, PostgreSQL, "Reads user data")
+Rel(UserProfileService, PostgreSQL, "Reads/Writes user data")
+@enduml

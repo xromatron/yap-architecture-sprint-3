@@ -50,11 +50,14 @@
 
 **Диаграмма контейнеров (Containers)**
 
-Добавьте диаграмму.
+[Диаграмма контейнеров](smart-home-monolith/diagrams/container/Container.puml)
 
 **Диаграмма компонентов (Components)**
 
-Добавьте диаграмму для каждого из выделенных микросервисов.
+[Диаграмма AuthService](smart-home-monolith/diagrams/component/AuthService.puml)
+[Диаграмма DeviceService](smart-home-monolith/diagrams/component/DeviceService.puml)
+[Диаграмма PaymentService](smart-home-monolith/diagrams/component/PaymentService.puml)
+[Диаграмма UserProfileService](smart-home-monolith/diagrams/component/UserProfileService.puml)
 
 **Диаграмма кода (Code)**
 
