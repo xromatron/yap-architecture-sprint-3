@@ -27,10 +27,10 @@ jobs:
 
     - name: Generate Diagrams
       run: |
-        plantuml diagrams/context/*.puml
-        plantuml diagrams/container/*.puml
-        plantuml diagrams/component/*.puml
-        plantuml diagrams/code/*.puml
+        plantuml smart-home-monolith/diagrams/context/*.puml
+        plantuml smart-home-monolith/diagrams/container/*.puml
+        plantuml smart-home-monolith/diagrams/component/*.puml
+        plantuml smart-home-monolith/diagrams/code/*.puml
 
     - name: Commit Diagrams
       run: |
