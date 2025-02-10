@@ -1,0 +1,20 @@
+@startuml
+title WarmHouse Context Diagram
+
+top to bottom direction
+
+!includeurl ../templates/C4_Component.puml
+
+Person(user, "User", "A user of the WarmHouse system")
+Person(admin, "Administrator", "An administrator managing the system")
+System(WarmHouseSystem, "WarmHouse System", "System managing devices")
+
+System_Ext(sensors, "Sensors", "Temperature sensors")
+System_Ext(heaters, "Heaters", "Heater modules")
+
+Rel(user, WarmHouseSystem, "Uses the system")
+Rel(admin,WarmHouseSystem,"Manages the system")
+Rel(WarmHouseSystem,sensors,"Fetches sensors temperature")
+Rel(WarmHouseSystem,heaters,"Turn heaters ON/OFF")
+
+@enduml

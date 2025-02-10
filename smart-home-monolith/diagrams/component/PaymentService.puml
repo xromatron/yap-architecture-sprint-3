@@ -1,0 +1,27 @@
+@startuml
+title PaymentService Component Diagram
+
+top to bottom direction
+
+!includeurl ../templates/C4_Component.puml
+
+System_Ext(bank, "Bank System", "External bank for processing payments")
+
+Container_Boundary(WarmHouseSystem, "WarmHouse System") {
+  Container(PaymentService, "PaymentService", "Java, Spring", "Process payments")
+  ContainerDb(Database, "Database", "PostgreSQL", "Stores user data")
+}
+
+Container(PaymentService, "PaymentService", "Java, Spring", "Process payments") {
+  Component(PaymentController, "PaymentController", "Authenticate and authorize users")
+  Component(ServiceLayer, "ServiceLayer", "Business Logic")
+  Component(ExternalSystemLayer, "ExternalSystemLayer", "External System access")
+  Component(RepositoryLayer, "RepositoryLayer", "Data access logic")
+}
+
+Rel(PaymentController,ServiceLayer,"Calls business logic")
+Rel(ServiceLayer,RepositoryLayer,"Reads/Writes data")
+Rel(ServiceLayer,ExternalSystemLayer,"Process payments")
+Rel(ExternalSystemLayer,bank,"Process transactions")
+Rel(RepositoryLayer,Database,"Reads/Writes payments data")
+@enduml
