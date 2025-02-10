@@ -36,7 +36,7 @@ class TelemetryData {
   +String data
 }
 
-User "1" -- "0..*" House : has
+User "1..*" -- "0..*" House : has
 House "1" -- "1..*" Device : has
 Device "1" -- "1..*" TelemetryData : includes
 
